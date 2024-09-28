@@ -1,14 +1,13 @@
 {
   "expo": {
-    "name": "taskhopper",
-    "slug": "taskhopper",
+    "name": "taskhopperonline",
+    "slug": "snack-5f163ba4-3048-4878-a2cf-dda0cf89211f",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,26 +16,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": "9d6b08a8-e807-483c-9062-2fc799fd0750"
-      }
-    },
-    "owner": "guidokaz"
+      "favicon": "./assets/favicon.png"
+    }
   }
 }
