@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { fetchServices } from '../lib/services/serviceService';
-import { useNavigation } from '@react-navigation/native'; // Ensure React Navigation is used
+import { Service } from '../lib/models/Service';
 
-export default function ServicesList() {
-  const [services, setServices] = useState([]);
-  const navigation = useNavigation(); // Use the navigation hook to navigate
+const ServicesList: React.FC = () => {
+  const [services, setServices] = useState<Service[]>([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     loadServices();
@@ -20,11 +21,12 @@ export default function ServicesList() {
     }
   };
 
-  const renderServiceItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.serviceItem}
-      onPress={() => navigation.navigate('ServiceBookingWizard', { service: item })} // Navigate to the booking wizard with the selected service
-    >
+  const handleServicePress = (service: Service) => {
+    navigation.navigate('ServiceBookingWizard' as never, { service } as never);
+  };
+
+  const renderServiceItem = ({ item }: { item: Service }) => (
+    <TouchableOpacity style={styles.serviceItem} onPress={() => handleServicePress(item)}>
       <Image source={{ uri: item.image }} style={styles.serviceImage} />
       <Text style={styles.serviceName}>{item.name}</Text>
       <Text style={styles.servicePrice}>${item.price}</Text>
@@ -44,15 +46,17 @@ export default function ServicesList() {
       />
     </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 12,
+    marginLeft: 16,
   },
   servicesList: {
-    paddingVertical: 8,
+    paddingHorizontal: 16,
   },
   serviceItem: {
     width: 150,
@@ -82,3 +86,5 @@ const styles = StyleSheet.create({
     color: '#4b5563',
   },
 });
+
+export default ServicesList;

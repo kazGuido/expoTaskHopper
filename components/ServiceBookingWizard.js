@@ -41,9 +41,13 @@ export function ServiceBookingWizard({ route }) {
   }
 
   const handleTaskerSelection = (taskerId) => {
-    setSelectedTaskers(prev =>
-      prev.includes(taskerId) ? prev.filter(id => id !== taskerId) : [...prev, taskerId]
-    );
+    setSelectedTaskers((prevSelectedTaskers) => {
+      if (prevSelectedTaskers.includes(taskerId)) {
+        return prevSelectedTaskers.filter((id) => id !== taskerId);
+      } else {
+        return [...prevSelectedTaskers, taskerId];
+      }
+    });
   };
 
   const handleSubmit = async () => {
@@ -62,8 +66,9 @@ export function ServiceBookingWizard({ route }) {
       setStep(4);
     } catch (err) {
       setError('Failed to create booking. Please try again.');
-      console.error(err);
-    }
+    setSnackbarVisible(true); // Ensure the Snackbar is visible
+    console.error(err);
+  }
     setIsLoading(false);
   };
 

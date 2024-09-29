@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import ServicesList from './ServiceList';
+import { useNavigation, DrawerNavigationProp } from '@react-navigation/native';
+import ServicesList from './ServicesList';
 import CategoryGrid from './CategoryGrid';
 
-export default function HomeScreen({ navigation }) {
+type HomeScreenNavigationProp = DrawerNavigationProp<{}>;
+
+const HomeScreen: React.FC = () => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleMenuToggle = () => {
-    navigation.openDrawer(); // Open the drawer for the burger menu
+    navigation.openDrawer();
   };
 
   const handleNotificationToggle = () => {
@@ -16,7 +20,7 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuToggle} style={styles.iconButton}>
           <Ionicons name="menu" size={24} color="#333" />
@@ -34,7 +38,7 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <ScrollView style={styles.content}>
-        <Text style={styles.title}>Welcome to Home Screen</Text>
+        <Text style={styles.title}>Welcome to Task Hopper</Text>
         <CategoryGrid />
         <ServicesList />
       </ScrollView>
@@ -45,29 +49,9 @@ export default function HomeScreen({ navigation }) {
           {/* Add your notifications content here */}
         </View>
       )}
-      
-      {/* Bottom Navigation Bar */}
-      <View style={styles.navBar}>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="home" size={24} color="#333" />
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="search" size={24} color="#333" />
-          <Text>Search</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="calendar" size={24} color="#333" />
-          <Text>Bookings</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="person" size={24} color="#333" />
-          <Text>Account</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -106,38 +90,29 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginVertical: 16,
+    marginLeft: 16,
   },
   notificationsContainer: {
-    padding: 16,
+    position: 'absolute',
+    top: 60,
+    right: 0,
+    bottom: 0,
+    width: '80%',
     backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#e5e7eb',
+    borderLeftWidth: 1,
+    borderLeftColor: '#e5e7eb',
+    padding: 16,
   },
   notificationsTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
   },
-  navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#e5e7eb',
-    paddingVertical: 10,
-    position: 'absolute', // Positioning to keep it at the bottom
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  navItem: {
-    alignItems: 'center',
-  },
 });
+
+export default HomeScreen;
